@@ -44,7 +44,6 @@ function setCounter() {
     let counterTime = (options.differenceTime = `${
       options.differenceTime - 1000
     }`);
-    console.log(counterTime);
     if (counterTime < 1000) {
       clearInterval(timerCounter);
     }
