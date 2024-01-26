@@ -7,43 +7,53 @@ form.addEventListener('submit', handlerSubmit);
 function handlerSubmit(evt) {
   evt.preventDefault();
 
-  let delay = evt.target.delay.value;
-  let step = evt.target.step.value;
-  let amount = evt.target.amount.value;
-
-  createPromise(amount, delay, step);
+  let delay = Number(evt.target.delay.value);
+  let step = Number(evt.target.step.value);
+  let amount = Number(evt.target.amount.value);
+  const position = 1;
+  createPromise(position, delay);
+  setTimeInternal(amount, step, delay);
 }
 
 function createPromise(position, delay) {
-  const shouldResolve = Math.random() > 0.3;
-
   const promise = new Promise((resolve, reject) => {
+    const shouldResolve = Math.random() > 0.3;
     setTimeout(() => {
-      setInterval(() => {
-        if (shouldResolve) {
-          resolve({ position, delay });
-        } else {
-          reject({ position, delay });
-        }
-      }, step);
+      if (shouldResolve) {
+        resolve({ position, delay });
+      } else {
+        reject({ position, delay });
+      }
     }, delay);
   });
+
+  promise
+    .then(({ position, delay }) => {
+      console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+      iziToast.success({
+        title: 'OK',
+        message: `✅ Fulfilled promise ${position} in ${delay}ms`,
+        position: 'center',
+      });
+    })
+    .catch(({ position, delay }) => {
+      console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+      iziToast.error({
+        title: 'Error',
+        message: `❌ Rejected promise ${position} in ${delay}ms`,
+        position: 'center',
+      });
+    });
 }
 
-createPromise(amount, delay)
-  .then(({ position, delay }) => {
-    console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
-    iziToast.success({
-      title: 'OK',
-      message: `✅ Fulfilled promise ${position} in ${delay}ms`,
-      position: 'center',
-    });
-  })
-  .catch(({ position, delay }) => {
-    console.log(`❌ Rejected promise ${position} in ${delay}ms`);
-    iziToast.error({
-      title: 'Error',
-      message: `❌ Rejected promise ${position} in ${delay}ms`,
-      position: 'center',
-    });
-  });
+function setTimeInternal(amount, step, delay) {
+  let position = 2;
+  let nextStep = delay + step;
+  for (let i = 1; i < amount; i += 1) {
+    setTimeout(() => {
+      createPromise(position, nextStep);
+      position += 1;
+      nextStep += step;
+    }, step);
+  }
+}
