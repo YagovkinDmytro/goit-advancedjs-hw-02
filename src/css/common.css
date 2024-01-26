@@ -30,7 +30,6 @@ button {
   font-weight: 700;
   line-height: 150%; /* 21px */
   letter-spacing: 0.28px;
-  box-sizing: border-box;
   display: flex;
   width: 200px;
   padding: 10px 32px;
@@ -52,7 +51,6 @@ input {
   font-weight: 500;
   line-height: 150%; /* 21px */
   letter-spacing: 0.28px;
-  box-sizing: border-box;
   display: flex;
   width: auto;
   padding: 10px 32px;
@@ -74,7 +72,6 @@ input {
   font-weight: 500;
   line-height: 150%; /* 21px */
   letter-spacing: 0.28px;
-  box-sizing: border-box;
   display: flex;
   width: auto;
   margin: 30px;
@@ -91,7 +88,6 @@ input {
 }
 
 .form {
-  box-sizing: border-box;
   display: flex;
   width: auto;
   flex-direction: column;

@@ -33,7 +33,7 @@ function createPromise(position, delay) {
       iziToast.success({
         title: 'OK',
         message: `✅ Fulfilled promise ${position} in ${delay}ms`,
-        position: 'center',
+        position: 'bottomCenter',
       });
     })
     .catch(({ position, delay }) => {
@@ -41,7 +41,7 @@ function createPromise(position, delay) {
       iziToast.error({
         title: 'Error',
         message: `❌ Rejected promise ${position} in ${delay}ms`,
-        position: 'center',
+        position: 'bottomCenter',
       });
     });
 }
