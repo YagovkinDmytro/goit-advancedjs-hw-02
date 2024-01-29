@@ -13,10 +13,11 @@ function handlerSubmit(evt) {
   const position = 1;
   createPromise(position, delay);
   setTimeInternal(amount, step, delay);
+  form.reset();
 }
 
 function createPromise(position, delay) {
-  const promise = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const shouldResolve = Math.random() > 0.3;
     setTimeout(() => {
       if (shouldResolve) {
@@ -26,34 +27,30 @@ function createPromise(position, delay) {
       }
     }, delay);
   });
-
-  promise
-    .then(({ position, delay }) => {
-      console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
-      iziToast.success({
-        title: 'OK',
-        message: `✅ Fulfilled promise ${position} in ${delay}ms`,
-        position: 'bottomCenter',
-      });
-    })
-    .catch(({ position, delay }) => {
-      console.log(`❌ Rejected promise ${position} in ${delay}ms`);
-      iziToast.error({
-        title: 'Error',
-        message: `❌ Rejected promise ${position} in ${delay}ms`,
-        position: 'bottomCenter',
-      });
-    });
 }
 
 function setTimeInternal(amount, step, delay) {
-  let position = 2;
-  let nextStep = delay + step;
-  for (let i = 1; i < amount; i += 1) {
-    setTimeout(() => {
-      createPromise(position, nextStep);
-      position += 1;
-      nextStep += step;
-    }, step);
+  let position = 1;
+  let nextDelay = delay;
+  for (let i = 1; i <= amount; i += 1) {
+    createPromise(position, nextDelay)
+      .then(({ position, delay }) => {
+        console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+        iziToast.success({
+          title: 'OK',
+          message: `✅ Fulfilled promise ${position} in ${delay}ms`,
+          position: 'topRight',
+        });
+      })
+      .catch(({ position, delay }) => {
+        console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+        iziToast.error({
+          title: 'Error',
+          message: `❌ Rejected promise ${position} in ${delay}ms`,
+          position: 'topRight',
+        });
+      });
+    position += 1;
+    nextDelay += step;
   }
 }

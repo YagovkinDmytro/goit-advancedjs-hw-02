@@ -46,6 +46,7 @@ function setCounter() {
     }`);
     if (counterTime < 1000) {
       clearInterval(timerCounter);
+      elements.input.removeAttribute('disabled');
     }
     options.differanceObj = convertMs(counterTime);
     elements.days.textContent = addLeadingZero(options.differanceObj.days);
@@ -59,6 +60,7 @@ function setCounter() {
   }, 1000);
 
   elements.button.setAttribute('disabled', '');
+  elements.input.setAttribute('disabled', '');
 }
 
 function convertMs(ms) {

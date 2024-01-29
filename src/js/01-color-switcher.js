@@ -2,6 +2,7 @@ const mainPage = document.querySelector('body');
 
 const startBtn = document.querySelector('button[data-start]');
 const stopBtn = document.querySelector('button[data-stop]');
+stopBtn.setAttribute('disabled', '');
 
 startBtn.addEventListener('click', handlerStart);
 stopBtn.addEventListener('click', handlerStop);
